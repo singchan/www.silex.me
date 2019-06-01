@@ -31,31 +31,36 @@ $(function() {
       // if the site has a defined width and the window is smaller than this width, then
       // scale the website to fit the window
 
-      var scrollRatio = $body.scrollTop() / $body.prop("scrollHeight");
-
-      // reset transform
-      // needed to measure window width
-      $html.css({
-        'transform': '',
-        'transform-origin': '',
-        'min-width': '',
-      })
       var winWidth = $win.width();
+      if(winWidth>480 && winWidth < siteWidth) {
 
-      // handle resize when needed
-      if(winWidth < siteWidth) {
-        // scale the site
-        var breakPoint = winWidth < 480 ? 480 : siteWidth;
-        var ratio = winWidth / breakPoint;
+
+
+        var scrollRatio = $body.scrollTop() / $body.prop("scrollHeight");
+
+        // reset transform
+        // needed to measure window width
         $html.css({
-          'transform': 'scale(' + ratio + ')',
-          'transform-origin': '0 0',
-          'min-width': breakPoint + 'px',
+          'transform': '',
+          'transform-origin': '',
+          'min-width': '',
         })
-        // keep the scroll position when resizing,
-        // fixes a bug on mobile when reaching the bottom of page and the broser UI comes back and changes the viewport size
-        var scrollTarget = scrollRatio * $body.prop("scrollHeight");
-        $body.scrollTop(scrollTarget);
+
+        // handle resize when needed
+        if(winWidth < siteWidth) {
+          // scale the site
+          var breakPoint = winWidth < 480 ? 480 : siteWidth;
+          var ratio = winWidth / breakPoint;
+          $html.css({
+            'transform': 'scale(' + ratio + ')',
+            'transform-origin': '0 0',
+            'min-width': breakPoint + 'px',
+          })
+          // keep the scroll position when resizing,
+          // fixes a bug on mobile when reaching the bottom of page and the broser UI comes back and changes the viewport size
+          var scrollTarget = scrollRatio * $body.prop("scrollHeight");
+          $body.scrollTop(scrollTarget);
+        }
       }
     }
     else {
